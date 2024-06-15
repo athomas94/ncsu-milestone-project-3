@@ -28,6 +28,66 @@ const CampaignDetails = () => {
   const [editingNote, setEditingNote] = useState(null);
   const [editedNoteText, setEditedNoteText] = useState('');
 
+  // useEffect(() => {
+  //   fetchCampaignData()    
+  // }, [id])
+
+  // useEffect(() => {
+  //   fetchCampaignCharacters()
+  // },[campaign])
+
+  //   const fetchCampaignData = async ()=>{
+  //     const response = await fetch(`http://127.0.0.1:5000/campaigns/${id}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`
+  //       }
+  //     })
+      
+  //     if (response.ok) {
+  //       const campaignData = await response.json()
+  //       setCampaign(campaignData)
+  //       console.log('Campaign data:', campaignData);
+  //       console.log('Campaign:', campaign);
+  //       console.log('campaign.dm:', campaign.dm);
+  //       if (campaignData.dm === decodedToken.sub.userId) {
+  //         setIsDungeonMaster(true);
+  //     }}
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP Error: ${response.status}`);
+  //     }
+  //   }
+
+  //   // fetches all characters if the dm, fetches only your character if not the dm
+  //   const fetchCampaignCharacters = async () => {
+  //     const response = await fetch(`http://127.0.0.1:5000/campaigns/${id}/characters`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`
+  //       }
+  //     })
+      
+      
+  //     if (response.ok) {
+  //       const charactersData = await response.json()
+  //       setCharacters(charactersData)
+  //       console.log('Characters in campaign:', characters);
+  //       console.log('characters length:', characters.length);
+  //       if (characters.length === 0) {
+  //           console.log('No player character found for this campaign');
+  //           setNoCharacterInCampaign(true);
+  //     }}
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP Error: ${response.status}`);
+  //     }
+  //   }
+
+
+
+
+
   useEffect(() => {
     const fetchCampaignData = async () => {
        // Function to fetch characters based on character_ids
@@ -162,19 +222,20 @@ const CampaignDetails = () => {
                 const playerCharacter = await response.json();
                 delete playerCharacter.campaigns;
                 console.log('playerCharacter',playerCharacter);//debug
-
+                setPlayerCharacterSheet(playerCharacter);
                 return playerCharacter;
 
               } catch (error) {
                   console.log('Error:', error.message);
               }
             } 
-
-            const playerCharacterSheetData1 = await fetchPlayerCharacter();
-            setPlayerCharacterSheet(playerCharacterSheetData1);
+            fetchPlayerCharacter();
+            // playerCharacterSheetData comes out null
+            // const playerCharacterSheetData1 = await fetchPlayerCharacter();
+            // setPlayerCharacterSheet(playerCharacterSheetData1);
             
-            console.log('playerCharacterSheetData',playerCharacterSheet)// debug
-            console.log('dm2:',campaignData.dm)//debug
+            // console.log('playerCharacterSheetData',playerCharacterSheet)// debug
+            // console.log('dm2:',campaignData.dm)//debug
 
 
             // const playerCharacter = await fetchPlayerCharacterForCampaign(id); // Replace with actual API call
@@ -474,6 +535,7 @@ const CampaignDetails = () => {
     </div>
   )
 }
+
 
 export default CampaignDetails;
 

@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_cors import cross_origin
 
 # import the model for this blueprint
-from ..models import Campaign, User, UserCampaigns,Character
+from ..models import Campaign, User, UserCampaigns, Character
 
 # import database
 from ..config import db
@@ -15,7 +15,6 @@ campaign_bp = Blueprint('campaign', __name__, url_prefix='/campaigns')
 # ROUTES
 # try except is like try catch, Exception is all the errors, the as a variable helps to do something with the error.
 
-# logged in, gets one campaign, and the character for that campaign
 @campaign_bp.route('/<int:campaign_id>/characters', methods=['GET'])
 @jwt_required()
 def get_characters(campaign_id):
@@ -27,6 +26,38 @@ def get_characters(campaign_id):
         # itierates through the results object, then gets the attributes and puts them in a list using a method defined in the model
         characters = [char.to_dict() for char in campaign.characters]
         return jsonify(characters)
+    except Exception as err:
+        print(f"Error: {err}")
+        return jsonify({'error': 'Failed to retrieve characters'}), 500
+        
+# Still a work in progress. want a route to have less code on front end.
+# logged in, gets one campaign, and the characters for that campaign if you are the DM, or just your character information if you are not the DM
+# @campaign_bp.route('/<int:campaign_id>/characters', methods=['GET'])
+# @jwt_required()
+# def get_characters(campaign_id):
+#     try:
+#         user_id = get_jwt_identity()['userId']
+#         user = User.query.get(user_id)
+
+#         campaign = Campaign.query.get(campaign_id)
+#         # print('testing what campaign looks like: ', campaign)
+#         # itierates through the results object, then gets the attributes and puts them in a list using a method defined in the model
+#         if campaign.dm == user.id:
+           
+#             characters = [camp_characters.character.to_dict() for camp_characters in campaign.characters]
+#             # print('testing what characters looks like: ', characters)
+#             return jsonify(characters)
+
+#         if campaign.dm != user.id:
+            
+#             # print('testing what campaign.characters looks like: ', campaign.characters)
+#             for camp_character in campaign.characters:
+#                 # print('testing what camp_character looks like: ', camp_character.to_dict())
+#                 character = Character.query.get(camp_character.character_id)
+#                 # print('testing what character looks like: ', character.to_dict())
+#                 return jsonify(character.to_dict())
+
+            
     except Exception as err:
         print(f"Error: {err}")
         return jsonify({'error': 'Failed to retrieve characters'}), 500
@@ -66,16 +97,14 @@ def get_eligible_campaigns():
     #creates an empty list to append eligible campaigns for a character to be added to
     eligible_campaigns = []
 
-    print('testing what user.campaigns looks like: ', user.campaigns) 
+    # print('testing what user.campaigns looks like: ', user.campaigns) 
 
     for user_campaign in user.campaigns:
         campaign = user_campaign.campaign
 
-        # if campaign DM is not the user, and there are no characters in the campaign that belong to the user
-        print('testing what campaign looks like: ', campaign.to_dict()) # <UserCampaigns 4, 7>
-        
-        if campaign.dm != user_id and not any(character for character in campaign.characters if character.user_id == user_id):
+        if campaign.dm != user_id:
             eligible_campaigns.append(campaign.to_dict()) # add each campaign info to the list
+
 
     return jsonify(eligible_campaigns)
 

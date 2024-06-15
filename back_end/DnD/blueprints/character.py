@@ -15,7 +15,7 @@ char_bp = Blueprint('character', __name__, url_prefix='/characters')
 # ROUTES
 # try except is like try catch, Exception is all the errors, the as a variable helps to do something with the error.
 
-# gets all characters after logging in
+# gets all characters that belong to the logged in user 
 @char_bp.route('/', methods=['GET'])
 @jwt_required()
 def get_chars():
@@ -153,9 +153,12 @@ def add_char_to_camp():
         if campaign.dm == user.id:
             return jsonify({"error": "You cannot add a character to a campaign you are the DM of"}), 403
 
-        if any(char for char in campaign.characters if char.user_id == user_id):
+        # if any(char for char in campaign.characters if char.user_id == user_id):
+        #     return jsonify({"error": "You already have a character in this campaign"}), 400
+        
+        if any(char.character.user_id == user_id for char in campaign.characters):
             return jsonify({"error": "You already have a character in this campaign"}), 400
-
+    
         char_campaign = CharacterCampaigns(character_id=char_id, campaign_id=campaign_id, character=character, campaign=campaign)
         
         db.session.add(char_campaign)

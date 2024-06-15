@@ -20,18 +20,18 @@ usercamp_bp = Blueprint('usercamp', __name__, url_prefix='/usercamp')
 def create_camp():
     try:
         data = request.get_json()
-        print('testing what data looks like: ', data)
+        # print('testing what data looks like: ', data)
         # get the user id from the jwt
         user_id = get_jwt_identity()['userId']
-        print('testing what user_id looks like: ', user_id)
+        # print('testing what user_id looks like: ', user_id)
         # get the user
         user = User.query.get(user_id)
         # user = user.to_dict()
-        print('testing what user looks like: ', user)
+        # print('testing what user looks like: ', user)
         # create a new campaign
         data["dm"] = user_id
         new_camp = Campaign(**data)
-        print('testing what new_camp looks like: ', new_camp)
+        # print('testing what new_camp looks like: ', new_camp)
 
         # adds the campaign and user info to the user_campaign table
         user_campaign = UserCampaigns(user_id=user_id, campaign_id=new_camp.id, user=user, campaign=new_camp)
@@ -57,7 +57,7 @@ def get_camps():
             print("User not found")
             return jsonify({'error': 'User not found'}), 404
         # get the campaigns
-        print('testing what user.campaigns looks like: ', user.campaigns)
+        # print('testing what user.campaigns looks like: ', user.campaigns)
         
         # campaigns = [campaign.to_dict() for campaign in user.campaigns] # returns the UserCampaign object
 

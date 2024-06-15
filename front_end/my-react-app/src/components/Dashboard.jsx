@@ -7,9 +7,9 @@ import { getToken } from "../utils/auth";
 import { useNavigate } from 'react-router-dom';
 
 // Import images
-import image1 from '../assets/cardimage-1.jpg'
-import image2 from '../assets/cardimage-2.jpg'
-import image3 from '../assets/cardimage-3.jpg'
+// import image1 from '../assets/cardimage-1.jpg'
+// import image2 from '../assets/cardimage-2.jpg'
+// import image3 from '../assets/cardimage-3.jpg'
 
 
 const Dashboard = () => {
@@ -18,12 +18,13 @@ const Dashboard = () => {
     const [allCampaigns, setAllCampaigns] = useState([]);
 
     const navigate = useNavigate();
-    const token = getToken();
+    const token = getToken(); 
 
     // fetch all campaigns associated with logged in user
     useEffect(() => {
         const fetchUserCampaigns = async () => {
-          try { 
+          try {
+            
             const response = await fetch('http://127.0.0.1:5000/usercamp/', {
               method: 'GET',
               headers: {
@@ -31,7 +32,7 @@ const Dashboard = () => {
                 'Content-Type': 'application/json'
               }
             });
-            // console.log('Response:',response)
+            console.log('Response:',response)
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -53,8 +54,8 @@ const Dashboard = () => {
             const response = await fetch('http://127.0.0.1:5000/campaigns/', {
               method: 'GET',
               headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
               }
             });
             
@@ -100,15 +101,16 @@ const Dashboard = () => {
         
         setSelectedOption(event.target.value);
         setTextAreaVisible(true);
-        // console.log('selected option:', selectedOption);
+        console.log('selected option:', selectedOption);
     };
 
     const handleJoinSubmit = async (event) => {
-        // console.log('selected option in submit:', selectedOption);
-        // console.log('password in submit:', password);
+        console.log('selected option in submit:', selectedOption);
+        console.log('password in submit:', password);
         event.preventDefault();
         // Handle the form submission
         try {
+            const token = getToken(); 
             const response = await fetch('http://127.0.0.1:5000/usercamp/join', {
               method: 'POST',
               headers: {
@@ -133,7 +135,7 @@ const Dashboard = () => {
     
     
     const handleNewCampaignClick = () => {
-        navigate("/Campaigns/new");
+        navigate("/campaigns/new");
     }
 
     return (
