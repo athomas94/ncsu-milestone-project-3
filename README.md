@@ -8,9 +8,30 @@ For this project, we are creating an application used to manage various table to
 
 ## How it works
 
-In our application, a user arrives and creates and account or logs in to an existing account. From there, they can chose an existing campaign or create a new campaign, and based on whether they're the owner of the campaign (the Dungeon Master) or a player within the campaign. After selecting the correct campaign, a user is then directed to a dashboard where they can access a character sheet, note section, and lastly an area where you can roll virtual dice. For dungeon masters, there is also an "at a glance" view where they can see all of the players names, their armor, current health points, and their passive perception.
+In our application, a user arrives and creates an account or logs in to an existing account. From there, they can chose an existing campaign or create a new campaign, and based on whether they're the owner of the campaign (the Dungeon Master) or a player within the campaign. After selecting the correct campaign, a user is then directed to a dashboard where they can access a character sheet, note section, and lastly an area where you can roll virtual dice. For dungeon masters, there is also an "at a glance" view where they can see all of the players names, their armor, current health points, and their passive perception.
 
 Please note that devlopment is still a work-in-progress, bookmark us to see what features we're able to bring to you as development continues!
+
+### Here is a small breakdown of how to use each area
+
+Sign up
+- Create a user login and password by clicking on the sign up button. 
+
+Login
+- Login using your correct credentials:
+
+User Dashboard
+- Create an Adventure
+    - Create a campaign for other users to join. You will need to create a password that will be shared with users you are allowing to join your campaign. Creating a campaign makes you the Dungeon Master(DM).
+    - Join an existing Adventure: The drop down will show a list of ALL campaigns in the database. Once you have selected the name of the campaign you want to join, you will be prompted to enter the password for the campaign. 
+    - All campaigns you are a part of will display on the dashboard.
+- View your campaigns
+    - From your dashboard, click on a campaign card. If you are the DM, you will see the characters that are a part of your campaign. If you are not a DM, you will see your own character sheet with the name and description of the campaign at the top of the page. 
+- Characters
+    - From your dashboard, in the navigation, choose characters. You can create a new character or view your already made characters. 
+    - When creating a character, fill in the form for the character. You can also add your character to a campaign only after you have previously joined the campaign. The drop down will only show campaigns you are a part of. You may also update/edit or delete your character from this page. 
+- Notes
+    - When in a campaign you may take notes that will be saved to the database. For now, you do need to refresh the page to see the new notes. This feature is available to players as well as the DM.
 
 ## Development
 
