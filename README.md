@@ -1,6 +1,6 @@
 # TomeTracker
 
-### Link: under construction
+### Link: https://tome-tracker.onrender.com/
 
 ## Description
 
@@ -22,14 +22,13 @@ Jordan Cox and Andrew Thomas were responsible for the front end portion of this 
 
 Together, Vanessa Pursley and Kai Han took charge of the back end systems, combining their talents to bring our database connections to life, as well as navigate the complexity of user authentication. To add an additional layer of challenge, Kai and Vanessa decided to use Python and Flask as the main backend systems for this project. This provided some extra unique challenges as Python was a language that required extra reviewing to really grasp. Once this happened though, Vanessa and Kai were unmatched in speed and effectiveness of implementation of APIs, database management, and state management. For as complex as this project ended up being for the time frame we had, Vanessa and Kai were absolute rock stars. They took on the challenge head on and helped deliver some of the coolest features we have to offer, and most impressively, when one feature was done the only question ever asked was "what else can we add!?" 
 
-### Tech / Frameworks Used
+## Tech / Frameworks Used
 
 #### Front-End:
 
 - React
 - Vite
 - Bootstrap
-- Axios
 
 #### Back-End:
 
@@ -37,10 +36,10 @@ Together, Vanessa Pursley and Kai Han took charge of the back end systems, combi
 - Flask
 - Flask-SQL-Alchemy
 
-### Issues and future states
+## Issues and future states
 
 There are a few thing that aren't quite right with the current iteration of our platform, and the big one is deployment. As of writing, this service was just deployed to Render, though it was not our first, or second choice. We had original aspired to host this application on AWS running a mix of Elastic Beanstalk and S3 buckets, but there were so many errors and head scratching moments that we had to can this idea and just get the platform running somewhere. While we are happy that the application is demo ready, we're not happy with the speed of the hosting site, as well as it's finicky nature. There are other issues we would have liked to iron out if we had had the time, such as button spacing, general look and feel, and some better file structuring, but all of these things are no way henderances to the function of the site. Going forward, the future for a site like this could really be quite high. We would love to eventually be able to incorporate a way for users to interact with each other in real time when taking notes, or just partaking in a campaign together. Additionally, some other features like a initiative tracker, DM monster cards, and API connections with some larger D&D providers, suchs as DnDbeyond.com. Lastly, it would be really neat if we could somehow incorporate AI into the platform to help write session recaps, recomend items or spells to players, or help run the game for DMs, however that is a far future state. Right now, we're happy that we can play a game of D&D with friends using the app we made.
 
-### Personal note
+## Personal note
 
 I (Andrew Thomas) would be quite upset if I did not reiterate how phenomenal this team as a whole was. We stayed together from project 2 and the project just seemed to happen out of nowhere. It was so easy to work with every person on this team, and I know they'll all be fantastic devs outside of the program. We took an already fairly ambitious plan for a project, and in 12 days not on met, but greatly surpassed what our original scope was, and it's something I'm just really proud to have been part of. 
