@@ -429,7 +429,7 @@ const CampaignDetails = () => {
         ): (
           <>
             {noCharacterInCampaign ? (
-              <p>Dear player. Welsome to the campaign detail page. There is no characters in this campaign yet. You can add a character to this campaign in the character sheet.</p>
+              <p>You do not have a character assigned to this campaign.</p>
             ) : (
               <CharacterSheetApp characterData={playerCharacterSheet} />
             )}
