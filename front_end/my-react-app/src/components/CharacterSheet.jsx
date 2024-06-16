@@ -140,7 +140,7 @@ const handleAddCharacterToCampaign = async () => {
 const deleteCharacter = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`http://127.0.0.1:5000/characters/${characterId}`, {
+    const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/characters/${characterId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
