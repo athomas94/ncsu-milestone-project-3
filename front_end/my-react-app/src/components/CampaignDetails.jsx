@@ -34,7 +34,7 @@ const CampaignDetails = () => {
       async function fetchCharactersByIds(charIds) {
         // Array to store fetch promises
         const fetchPromises = charIds.map(charId => {
-          return fetch(`http://127.0.0.1:5000/characters/${charId}`, {
+          return fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/characters/${charId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const CampaignDetails = () => {
       //function ends here//
 
       try {
-        const response = await fetch(`http://127.0.0.1:5000/campaigns/${id}`, {
+        const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/campaigns/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const CampaignDetails = () => {
         if (campaignData.dm === decodedToken.sub.userId) {
           setIsDungeonMaster(true);
           try {
-            const response = await fetch(`http://127.0.0.1:5000/campaigns/${id}/characters`, {
+            const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/campaigns/${id}/characters`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const CampaignDetails = () => {
           setIsDungeonMaster(false);
 
           try {
-            const response = await fetch(`http://127.0.0.1:5000/campaigns/${id}/characters`, {
+            const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/campaigns/${id}/characters`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ const CampaignDetails = () => {
 
             const fetchPlayerCharacter = async () => {
               try {
-                const response = await fetch(`http://127.0.0.1:5000/characters/${playerCharacterId}`, {
+                const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/characters/${playerCharacterId}`, {
                   method: 'GET',
                   headers: {
                     'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ const CampaignDetails = () => {
 
     const fetchNotes = async () => {
       try {
-        const response =  await fetch(`http://127.0.0.1:5000/notes/${id}`,{
+        const response =  await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/notes/${id}`,{
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -274,7 +274,7 @@ const CampaignDetails = () => {
     if (newNote.trim()) {
         const postNote = () => {
           try {
-            const response = fetch('http://127.0.0.1:5000/notes/', {
+            const response = fetch('https://ncsu-milestone-project-3-i5wf.onrender.com/notes/', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -321,7 +321,7 @@ const CampaignDetails = () => {
 
     const putNote = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/notes/${noteId}`, {
+        const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/notes/${noteId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -354,7 +354,7 @@ const CampaignDetails = () => {
   const handleDeleteNote = (noteId) => {
     const deleteNote = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/notes/${noteId}`, {
+        const response = await fetch(`https://ncsu-milestone-project-3-i5wf.onrender.com/notes/${noteId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

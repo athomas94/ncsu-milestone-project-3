@@ -22,7 +22,7 @@ const Login = () => {
         e.preventDefault();
         // Handle form submission, validation, and API call here
         try {
-            const response = await fetch('http://127.0.0.1:5000/auth/login', {
+            const response = await fetch('https://ncsu-milestone-project-3-i5wf.onrender.com/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

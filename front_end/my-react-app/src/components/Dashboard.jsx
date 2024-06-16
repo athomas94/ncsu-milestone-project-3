@@ -24,7 +24,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchUserCampaigns = async () => {
           try { 
-            const response = await fetch('http://127.0.0.1:5000/usercamp/', {
+            const response = await fetch('https://ncsu-milestone-project-3-i5wf.onrender.com/usercamp/', {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -50,7 +50,7 @@ const Dashboard = () => {
         const fetchAllCampaigns = async () => {
           try {
              
-            const response = await fetch('http://127.0.0.1:5000/campaigns/', {
+            const response = await fetch('https://ncsu-milestone-project-3-i5wf.onrender.com/campaigns/', {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -109,7 +109,7 @@ const Dashboard = () => {
         event.preventDefault();
         // Handle the form submission
         try {
-            const response = await fetch('http://127.0.0.1:5000/usercamp/join', {
+            const response = await fetch('https://ncsu-milestone-project-3-i5wf.onrender.com/usercamp/join', {
               method: 'POST',
               headers: {
                 'Authorization': `Bearer ${token}`,
