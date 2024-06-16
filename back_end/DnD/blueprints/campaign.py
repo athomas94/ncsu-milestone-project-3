@@ -112,7 +112,7 @@ def get_eligible_campaigns():
 # Route to fetch eligible campaigns where the user is not the DM and doesn't have a character already
 @campaign_bp.route('/eligible', methods=['GET'])
 @jwt_required()
-def get_eligible_campaigns():
+def get_eligible_campaigns_correct():
 
     user_id = get_jwt_identity()['userId']
     user = User.query.get(user_id)
