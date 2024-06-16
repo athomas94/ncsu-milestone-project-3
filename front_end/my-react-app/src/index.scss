@@ -376,17 +376,12 @@ html, body {
 .characters-page {
   padding: 20px;
   color: #f0f0f0;
+  font-family: 'Amarante';
 
   h2 {
     font-family: 'Amarante';
     text-align: center;
     margin-bottom: 20px;
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px; // Adjust this value to your desired spacing
   }
 
   .character-list {
@@ -397,9 +392,8 @@ html, body {
 
     .character-card {
       position: relative;
-      width: calc(25% - 20px);
-      /* 4 cards per row */
-      padding: 20px;
+      width: calc(33.33% - 20px);
+      padding: 30px;
       border: 1px solid #333;
       border-radius: 5px;
       background-color: #333;
@@ -408,7 +402,7 @@ html, body {
       transition: background-color 0.3s;
       background-size: cover;
       background-position: center;
-      min-height: 200px;
+      min-height: 300px;
 
       &:hover {
         background-color: #555;
@@ -416,30 +410,25 @@ html, body {
 
       .card-body,
       .placeholder {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(52, 58, 64, 0.9);
+        padding: 10px;
+        text-align: center;
 
         h4 {
-          margin-bottom: 10px;
+          margin-bottom: 5px;
           font-size: 1.2em;
-          color: rgb(0, 4, 255);
+          font-family: 'Amarante';
+          color: #f0f0f0;
         }
 
         p {
-          margin: 5px 0;
-        }
-      }
-
-      .button-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-
-        button {
-          flex: 1;
-          margin: 0 5px;
-          font-size: 0.8em;
+          margin: 0;
+          font-family: 'Amarante';
+          color: #f0f0f0;
         }
       }
     }
@@ -621,8 +610,23 @@ html, body {
   .button-container {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
     margin-bottom: 20px;
     padding-bottom: 20px;
+  }
+}
+
+.character-sheet-page {
+  padding-bottom: 60px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .custom-button {
+    margin: 0 10px;
   }
 }
 
@@ -663,6 +667,19 @@ html, body {
   .buttons {
     .btn {
       width: 40%;
+    }
+  }
+
+  .character-list {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+
+    .character-card {
+      width: 100% !important;
+      padding: 20px;
+      min-height: 200px;
+      box-sizing: border-box;
     }
   }
 }

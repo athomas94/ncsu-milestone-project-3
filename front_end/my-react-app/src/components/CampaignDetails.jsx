@@ -390,7 +390,7 @@ const CampaignDetails = () => {
         {isDungeonMaster ? (
           <>
             {noCharacterInCampaign ? (
-              <p>Dear Dungeon Master. Welsome to the campaign detail page. There is no characters in this campaign yet. Please wait for players to join in.</p>
+              <p>There are no characters in this campaign yet. Please wait for players to join.</p>
             ) : (
               <>
               <h3>Character Sheets</h3>

@@ -11,16 +11,16 @@ import Gideon from "../testCharacters/gideon.json";
 //     return <DnDCharacterStatsSheet character={Gideon}/>
 //   }
 // }
-
+// testing merge conflicts 
 const CharacterSheetApp = ({characterData}) => {
 
   const token = getToken();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const characterIdObject = useParams();
-  const characterId = characterIdObject.id;
-  
+  // const characterIdObject = useParams();
+  // const characterId = characterIdObject.id;
+  const {characterId} = useParams()
   const [character, setCharacter] = useState({});
   const [eligibleCampaigns, setEligibleCampaigns] = useState([]);
   const [selectedCampaignId, setSelectedCampaignId] = useState('');
@@ -137,6 +137,25 @@ const handleAddCharacterToCampaign = async () => {
     }
 };
 
+const deleteCharacter = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(`http://127.0.0.1:5000/characters/${characterId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+    console.log('Character deleted');
+    navigate('/characters'); // Redirect to characters list after deletion
+  } catch (error) {
+    console.error('Error deleting character:', error);
+  }
+};
   // const [character, setCharacter] = useState<DnDCharacter>(loadDefaultCharacter())
 
   const statsSheet = characterData ? (
@@ -201,7 +220,7 @@ const handleAddCharacterToCampaign = async () => {
   //   }
   // }
   return (
-    <div className="character-sheet-container">
+    <div className="character-sheet-page">
       {location.pathname.includes('/campaigns') ? (
         <>
           {statsSheet}
@@ -209,6 +228,7 @@ const handleAddCharacterToCampaign = async () => {
       ): (
         <>
         {addToCampaign}
+        
         {statsSheet}
         </>
       )}
@@ -222,7 +242,11 @@ const handleAddCharacterToCampaign = async () => {
           onChange={handleImageUrlChange}
         />
       </Form.Group>
-      <Button onClick={handleUpdateButton} style={{ marginTop: '20px', marginBottom: '20px'}}> Update </Button>
+      {/* <Button onClick={handleUpdateButton} style={{ marginTop: '20px', marginBottom: '20px'}}> Update </Button> */}
+      <div className="button-container">
+            <Button variant="primary" className="custom-button" onClick={handleUpdateButton}>Update Character</Button>
+            <Button variant="danger" className="custom-button" onClick={deleteCharacter}>Delete Character</Button>
+          </div>
       
     </div>
     

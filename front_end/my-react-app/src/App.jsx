@@ -36,7 +36,7 @@ function App() {
         <Route path="/characters" element={<ProtectedRoute><Characters /></ProtectedRoute>} />
         <Route path="/create-character" element={<ProtectedRoute> <CreateCharacter /> </ProtectedRoute>} />
         <Route path="/campaigns/:id" element={<ProtectedRoute> <CampaignDetails /> </ProtectedRoute>} />
-        <Route path="/character/:id" element={<ProtectedRoute> <CharacterSheetApp /> </ProtectedRoute>} />
+        <Route path="/character/:characterId" element={<ProtectedRoute> <CharacterSheetApp /> </ProtectedRoute>} />
         {/* <Route path="/logout" element={() => {
         }} /> */}
       </Routes>
