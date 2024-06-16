@@ -48,6 +48,10 @@ const CharacterSheet = () => {
     fetchCharacter();
   }, [characterId]);
 
+  const handleCharacterChange = (updatedCharacter) => {
+    setCharacter(updatedCharacter);
+  };
+
   const updateCharacter = async () => {
     try {
       const token = getToken();
@@ -64,6 +68,7 @@ const CharacterSheet = () => {
       }
       const result = await response.json();
       console.log('Character updated:', result);
+      navigate('/characters'); // Redirect to characters list after update
     } catch (error) {
       console.error('Error updating character:', error);
     }
@@ -95,7 +100,7 @@ const CharacterSheet = () => {
         <>
           <DnDCharacterStatsSheet
             character={character}
-            onCharacterChanged={updateCharacter}
+            onCharacterChanged={handleCharacterChange}
           />
           <div className="button-container">
             <Button variant="primary" className="custom-button" onClick={updateCharacter}>Update Character</Button>
