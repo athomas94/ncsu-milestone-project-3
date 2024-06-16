@@ -429,7 +429,7 @@ const CampaignDetails = () => {
         ): (
           <>
             {noCharacterInCampaign ? (
-              <p>There are no characters in this campaign yet. Please wait for players to join.</p>
+              <p>You do not have a character assigned to this campaign.</p>
             ) : (
               <CharacterSheetApp characterData={playerCharacterSheet} />
             )}
