@@ -153,15 +153,28 @@ def add_char_to_camp():
         if campaign.dm == user.id:
             return jsonify({"error": "You cannot add a character to a campaign you are the DM of"}), 403
 
-        if any(char for char in campaign.characters if char.user_id == user_id):
-            return jsonify({"error": "You already have a character in this campaign"}), 400
+        # if any(char for char in campaign.characters if char.user_id == user_id):
+        #     return jsonify({"error": "You already have a character in this campaign"}), 400
 
-        char_campaign = CharacterCampaigns(character_id=char_id, campaign_id=campaign_id, character=character, campaign=campaign)
+        # Check if the character is already in the campaign
+        if CharacterCampaigns.query.filter_by(character_id=char_id, campaign_id=campaign_id).first():
+            return jsonify({"error": "Character already in this campaign"}), 400
+        
+
+         # Create a new association between character and campaign
+        char_campaign = CharacterCampaigns(character_id=char_id, campaign_id=campaign_id)
         
         db.session.add(char_campaign)
         db.session.commit()
 
         return jsonify(char_campaign.to_dict())
+
+        # char_campaign = CharacterCampaigns(character_id=char_id, campaign_id=campaign_id, character=character, campaign=campaign)
+        
+        # db.session.add(char_campaign)
+        # db.session.commit()
+
+        # return jsonify(char_campaign.to_dict())
     except Exception as err:
         print(f"Error: {err}")
         return jsonify({'error': 'Failed to add character to campaign'}), 500

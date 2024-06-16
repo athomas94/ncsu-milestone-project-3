@@ -1,10 +1,10 @@
 # blueprint/routes for the note table
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, make_response
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_cors import cross_origin
+from sqlalchemy.orm import joinedload
 
 # import the model for this blueprint
-from ..models import Campaign, User, UserCampaigns,Character
+from ..models import Campaign, User, UserCampaigns,Character, CharacterCampaigns
 
 # import database
 from ..config import db
@@ -53,31 +53,124 @@ def create_character(campaign_id):
         print(f"Error: {err}")
         return jsonify({'error': 'Failed to create character'}), 500
 
-# Route to fetch all campaigns the user is a part of but not the DM of
-@campaign_bp.route('/eligible', methods=['GET'])
+
+# Route to fetch all campaigns the user is not a part of and not the DM of
+@campaign_bp.route('/eligible_wrong', methods=['GET'])
 @jwt_required()
 def get_eligible_campaigns():
-
-    user_id = get_jwt_identity()['userId']
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "user not found"}), 404
-
-    #creates an empty list to append eligible campaigns for a character to be added to
-    eligible_campaigns = []
-
-    print('testing what user.campaigns looks like: ', user.campaigns) 
-
-    for user_campaign in user.campaigns:
-        campaign = user_campaign.campaign
-
-        # if campaign DM is not the user, and there are no characters in the campaign that belong to the user
-        print('testing what campaign looks like: ', campaign.to_dict()) # <UserCampaigns 4, 7>
+    try:
+        user_id = get_jwt_identity()['userId']
+        user = User.query.get(user_id)
         
-        if campaign.dm != user_id and not any(character for character in campaign.characters if character.user_id == user_id):
-            eligible_campaigns.append(campaign.to_dict()) # add each campaign info to the list
+        if not user:
+            return jsonify({"error": "User not found"}), 404
 
-    return jsonify(eligible_campaigns)
+        # Fetch all campaigns where the user is not the DM and is not associated with any characters
+        eligible_campaigns = (Campaign.query
+                              .filter(Campaign.dm != user_id)
+                              .filter(~Campaign.characters.any(Character.user_id == user_id))
+                              .all())
+        
+        # Convert eligible campaigns to a dictionary format
+        eligible_campaigns_data = [campaign.to_dict() for campaign in eligible_campaigns]
+
+        return jsonify(eligible_campaigns_data)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'Failed to retrieve eligible campaigns'}), 500
+    
+
+# Route to fetch eligible campaigns where the user is not the DM
+# @campaign_bp.route('/eligible', methods=['GET'])
+# @jwt_required()
+# def get_eligible_correct_campaigns():
+#     try:
+#         user_id = get_jwt_identity()['userId']
+#         user = User.query.get(user_id)
+        
+#         if not user:
+#             return jsonify({"error": "User not found"}), 404
+
+#         # Fetch all campaigns where the user is not the DM
+#         eligible_campaigns = (Campaign.query
+#                               .filter(Campaign.dm != user_id)
+#                               .join(UserCampaigns)
+#                               .filter(UserCampaigns.user_id == user_id)
+#                               .all())
+        
+#         # Convert eligible campaigns to a dictionary format
+#         eligible_campaigns_data = [campaign.to_dict() for campaign in eligible_campaigns]
+
+#         return jsonify(eligible_campaigns_data)
+
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return jsonify({'error': 'Failed to retrieve eligible campaigns'}), 500
+
+
+# Route to fetch eligible campaigns where the user is not the DM and doesn't have a character already
+@campaign_bp.route('/eligible', methods=['GET'])
+@jwt_required()
+def get_eligible_correct_campaigns():
+    try:
+        user_id = get_jwt_identity()['userId']
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Fetch all campaigns where the user is not the DM
+        # Also exclude campaigns where the user already has a character
+        eligible_campaigns = (Campaign.query
+                              .filter(Campaign.dm != user_id)
+                              .outerjoin(CharacterCampaigns)
+                              .filter(~CharacterCampaigns.character.has(Character.user_id == user_id))
+                              .all())
+        
+        # Convert eligible campaigns to a dictionary format
+        eligible_campaigns_data = [campaign.to_dict() for campaign in eligible_campaigns]
+
+        return jsonify(eligible_campaigns_data)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'Failed to retrieve eligible campaigns'}), 500
+
+
+
+
+# @campaign_bp.route('/eligible', methods=['GET'])
+# @jwt_required()
+# def get_eligible_campaigns():
+
+#     if request.method == 'OPTIONS':
+#         response = make_response()
+#         response.headers['Access-Control-Allow-Origin'] = '*'
+#         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+#         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+#         return response
+
+#     user_id = get_jwt_identity()['userId']
+#     user = User.query.get(user_id)
+#     if not user:
+#         return jsonify({"error": "user not found"}), 404
+
+#     #creates an empty list to append eligible campaigns for a character to be added to
+#     eligible_campaigns = []
+
+#     print('testing what user.campaigns looks like: ', user.campaigns) 
+
+#     for user_campaign in user.campaigns:
+#         campaign = user_campaign.campaign
+
+#         # if campaign DM is not the user, and there are no characters in the campaign that belong to the user
+#         print('testing what campaign looks like: ', campaign.to_dict()) # <UserCampaigns 4, 7>
+        
+#         if campaign.dm != user_id and not any(character for character in campaign.characters if character.user_id == user_id):
+#             eligible_campaigns.append(campaign.to_dict()) # add each campaign info to the list
+
+#     return jsonify(eligible_campaigns)
 
 
 

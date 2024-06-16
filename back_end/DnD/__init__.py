@@ -1,7 +1,7 @@
 
 # This file initializes the Flask app and registers the blueprints and extensions.
 
-from flask import Flask 
+from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
@@ -23,8 +23,7 @@ def create_app():
     
     #Enable CORS
     # CORS(app)
-    CORS(app, origins = ['http://localhost:5173'], methods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
-
+    CORS(app, origins='*', methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
 
     bcrypt = Bcrypt(app)
     # Initialize JWT
