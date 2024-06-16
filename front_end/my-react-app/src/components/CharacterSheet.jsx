@@ -171,7 +171,7 @@ const deleteCharacter = async () => {
   );
   
   const addToCampaign = (
-    <div>
+    <div className="add-to-campaign">
       <label htmlFor="campaign">Add Character to Campaign:</label>
       <select
         id="campaign"
