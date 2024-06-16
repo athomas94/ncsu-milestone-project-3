@@ -327,7 +327,7 @@ html, body {
   width: 100%;
   height: 100%;
   position: relative;
-  transform-style: preserve-3d;
+  transform-style: preserve-3d; // indicates that the children of the element should e positioned in the 3d space
   transition: transform 0.6s;
   cursor: pointer;
 }
