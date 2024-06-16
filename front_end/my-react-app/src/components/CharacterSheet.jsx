@@ -170,24 +170,25 @@ const deleteCharacter = async () => {
     />
   );
   
-  const addToCampaign = (
-    <div>
-      <label htmlFor="campaign">Add Character to Campaign:</label>
-      <select
-        id="campaign"
-        value={selectedCampaignId}
-        onChange={(e) => setSelectedCampaignId(e.target.value)}
-      >
-        <option value="">-- Select --</option>
-        {eligibleCampaigns.map((campaign) => (
-          <option key={campaign.id} value={campaign.id}>
-            {campaign.name}
-          </option>
-        ))}
-      </select>
-      <button onClick={handleAddCharacterToCampaign}>Add to Campaign</button>
-    </div>
-  )
+const addToCampaign = (
+  <div className="add-to-campaign">
+    <label htmlFor="campaign">Add Character to Campaign:</label>
+    <select
+      id="campaign"
+      value={selectedCampaignId}
+      onChange={(e) => setSelectedCampaignId(e.target.value)}
+    >
+      <option value="">-- Select --</option>
+      {eligibleCampaigns.map((campaign) => (
+        <option key={campaign.id} value={campaign.id}>
+          {campaign.name}
+        </option>
+      ))}
+    </select>
+    <button onClick={handleAddCharacterToCampaign}>Add to Campaign</button>
+  </div>
+);
+
   
 
   // function loadDefaultCharacter () {
