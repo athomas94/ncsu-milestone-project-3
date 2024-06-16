@@ -112,30 +112,58 @@ def get_eligible_campaigns():
 # Route to fetch eligible campaigns where the user is not the DM and doesn't have a character already
 @campaign_bp.route('/eligible', methods=['GET'])
 @jwt_required()
-def get_eligible_correct_campaigns():
-    try:
-        user_id = get_jwt_identity()['userId']
-        user = User.query.get(user_id)
+def get_eligible_campaigns():
+
+    user_id = get_jwt_identity()['userId']
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "user not found"}), 404
+
+    #creates an empty list to append eligible campaigns for a character to be added to
+    eligible_campaigns = []
+
+    # print('testing what user.campaigns looks like: ', user.campaigns) 
+
+    for user_campaign in user.campaigns:
+        campaign = user_campaign.campaign
+
+        if campaign.dm != user_id:
+            eligible_campaigns.append(campaign.to_dict()) # add each campaign info to the list
+
+
+    return jsonify(eligible_campaigns)
+
+
+
+
+
+
+# @campaign_bp.route('/eligible', methods=['GET'])
+# @jwt_required()
+# def get_eligible_correct_campaigns():
+#     try:
+#         user_id = get_jwt_identity()['userId']
+#         user = User.query.get(user_id)
         
-        if not user:
-            return jsonify({"error": "User not found"}), 404
+#         if not user:
+#             return jsonify({"error": "User not found"}), 404
 
-        # Fetch all campaigns where the user is not the DM
-        # Also exclude campaigns where the user already has a character
-        eligible_campaigns = (Campaign.query
-                              .filter(Campaign.dm != user_id)
-                              .outerjoin(CharacterCampaigns)
-                              .filter(~CharacterCampaigns.character.has(Character.user_id == user_id))
-                              .all())
+#         # Fetch all campaigns where the user is not the DM
+#         # Also exclude campaigns where the user already has a character
+#         eligible_campaigns = (Campaign.query
+#                               .filter(Campaign.dm != user_id)
+#                               .outerjoin(CharacterCampaigns)
+#                               .filter(~CharacterCampaigns.character.has(Character.user_id == user_id))
+#                               .all())
         
-        # Convert eligible campaigns to a dictionary format
-        eligible_campaigns_data = [campaign.to_dict() for campaign in eligible_campaigns]
+#         # Convert eligible campaigns to a dictionary format
+#         eligible_campaigns_data = [campaign.to_dict() for campaign in eligible_campaigns]
 
-        return jsonify(eligible_campaigns_data)
+#         return jsonify(eligible_campaigns_data)
 
-    except Exception as e:
-        print(f"Error: {e}")
-        return jsonify({'error': 'Failed to retrieve eligible campaigns'}), 500
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return jsonify({'error': 'Failed to retrieve eligible campaigns'}), 500
 
 
 
